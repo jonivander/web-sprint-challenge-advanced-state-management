@@ -8,13 +8,13 @@ export const fetchSmurfs = () => (dispatch) => {
     axios
     .get('http://localhost:3333/smurfs')
     .then((res) => {
-        console.log(res);
         dispatch({ type: FETCH_SMURFS, payload: res.data })
     })
     .catch((err) => console.log(err)); 
 }
 
-export const addSmurf = () => (dispatch) => {
+export const addSmurf = (input) => (dispatch) => {
+    console.log(input);
     dispatch({ type: ADD_SMURF })
     axios
     .post('http://localhost:3333/smurfs', input)

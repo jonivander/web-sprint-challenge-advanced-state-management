@@ -1,14 +1,7 @@
 import { FETCH_SMURFS, ADD_SMURF } from '../actions';
 
 const initialState = {
-    smurfs: [
-        {
-            name: "Brainey",
-            age: 200,
-            height: "5cm",
-            id: 0
-        }
-    ]
+    smurfs: []
 };
 
 const smurfReducer = (state = initialState, action) => {
@@ -21,9 +14,12 @@ const smurfReducer = (state = initialState, action) => {
         case ADD_SMURF:
             return {
                 ...state, 
-                smurfs: action.payload
+                smurfs: [...state.smurfs, action.payload]
             }
+        default:
+            return state
     }
 }
+
 
 export default smurfReducer; 

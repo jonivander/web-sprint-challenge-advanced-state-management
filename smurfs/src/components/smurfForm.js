@@ -1,26 +1,25 @@
-import React, { useReducer, useState } from "react";
-import { ADD_SMURF } from '../actions';
-import smurfReducer from '../reducer';
+import React, { useState } from "react";
+import { connect } from 'react-redux';
+import  { addSmurf }  from '../actions';
 
-export default function SmurfForm() {
-    const [smurfs, dispatch] = useReducer(smurfReducer, [])
-    const [name, setName] = useState('')
-    const [age, setAge] = useState('')
-    const [height, setHeight] = useState('')
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        dispatch({ 
-            type: ADD_SMURF, 
-            payload: {
-                name: name,
-                age: age, 
-                height: height, 
-            }
-        })
-        setName('')
-        setAge()
-        setHeight('')
+
+function SmurfForm(props) {
+    const initialFormValues = {
+        name: '',
+        height: '',
+        age: ''
+    }
+
+    const [smurf, setSmurf] = useState(initialFormValues);
+
+    const changeHandler = (e) => {
+       setSmurf({...smurf, [e.target.name]: e.target.value})
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); 
+        props.addSmurf(smurf);
     } 
 
     return (
@@ -29,24 +28,29 @@ export default function SmurfForm() {
             <h2>Who's the smurfiest smurf to join the village?</h2>
             <input 
                 type='text' 
-                value={name} 
+                name= 'name'
+                value={smurf.name} 
                 placeholder='Smurf name'
-                onChange={e => setName(e.target.value)}
+                onChange={changeHandler}
             />
             <input 
                 type='text' 
-                value={age} 
+                name= 'age'
+                value={smurf.age} 
                 placeholder='Smurf age'
-                onChange={e => setAge(e.target.value)}
+                onChange={changeHandler}
             />
             <input 
                 type='text' 
-                value={height} 
+                name= 'height'
+                value={smurf.height} 
                 placeholder='Smurf height'
-                onChange={e => setHeight(e.target.value)}
+                onChange={changeHandler}
             />
             <button type='submit'>SMURF</button>
         </form>
         </>
     )
 }
+
+export default connect(null, {addSmurf})(SmurfForm); 
